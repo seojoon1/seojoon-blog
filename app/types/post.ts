@@ -5,8 +5,10 @@ export type PostMeta = {
   title: string;
   /** YYYY-MM-DD */
   date: string;
+  /** 요약 */
   summary: string;
   tags: string[];
+  /** True 라면 게시되지 않는다. */
   draft: boolean;
 };
 
