@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /*
+   * Pretendard 는 한글 글리프를 포함한다. 이전에 쓰던 Inter 는 라틴 전용이라
+   * 한글만 시스템 폰트로 폴백되면서 한 화면에 두 폰트가 섞여 보였다.
+   */
+  --font-sans: "Pretendard Variable", Pretendard, ui-sans-serif, system-ui,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
 }
 
 html,
