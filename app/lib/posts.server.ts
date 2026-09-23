@@ -75,5 +75,17 @@ export function getAllTags(): { tag: string; count: number }[] {
   }
   return [...counts.entries()]
     .map(([tag, count]) => ({ tag, count }))
-    .sort((a, b) => (b.count === a.count ? a.tag.localeCompare(b.tag) : b.count - a.count));
+    .sort((a, b) =>
+      b.count === a.count ? a.tag.localeCompare(b.tag) : b.count - a.count,
+    );
+}
+
+/**
+ * 해당 태그가 붙은 공개 글을 최신순으로 반환한다.
+ * 태그가 아예 쓰인 적이 없으면 null 을 준다. 빈 배열과 구분해야
+ * 라우트에서 "없는 태그"를 404 로 처리할 수 있다.
+ */
+export function getPostsByTag(tag: string): PostMeta[] | null {
+  const posts = getAllPosts().filter((post) => post.tags.includes(tag));
+  return posts.length > 0 ? posts : null;
 }

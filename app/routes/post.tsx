@@ -56,11 +56,13 @@ export default function Post({ loaderData }: Route.ComponentProps) {
             {post.tags.length > 0 && (
               <ul className="mt-4 flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
-                  <li
-                    key={tag}
-                    className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-400"
-                  >
-                    {tag}
+                  <li key={tag}>
+                    <Link
+                      to={`/tags/${encodeURIComponent(tag)}`}
+                      className="block rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
+                    >
+                      {tag}
+                    </Link>
                   </li>
                 ))}
               </ul>
