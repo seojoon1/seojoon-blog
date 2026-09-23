@@ -1,7 +1,10 @@
 import { Form, Link } from "react-router";
 
 import type { Route } from "./+types/home";
-import { getAllTags } from "~/lib/posts.server";
+import { getAllPosts, getAllTags } from "~/lib/posts.server";
+import { RecentPostsSlider } from "~/components/recent-posts-slider";
+
+const RECENT_POST_COUNT = 5;
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -11,11 +14,14 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export function loader() {
-  return { tags: getAllTags() };
+  return {
+    tags: getAllTags(),
+    recentPosts: getAllPosts().slice(0, RECENT_POST_COUNT),
+  };
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  const { tags } = loaderData;
+  const { tags, recentPosts } = loaderData;
 
   return (
     // 헤더/푸터를 제외한 남는 높이를 채우고 그 안에서 중앙 정렬한다.
@@ -67,6 +73,10 @@ export default function Home({ loaderData }: Route.ComponentProps) {
           ))}
         </ul>
       )}
+
+      <div className="mt-14 w-full max-w-xl">
+        <RecentPostsSlider posts={recentPosts} />
+      </div>
     </main>
   );
 }
