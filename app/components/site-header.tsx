@@ -6,11 +6,23 @@ const GITHUB_USERNAME = "seojoon1";
  * 크롬 새 탭 화면의 우상단에 대응하는 헤더.
  * 앱 그리드 자리에 글 목록을, 프로필 사진 자리에 GitHub 프로필을 둔다.
  *
- * 둘 다 아이콘뿐이라 각각 aria-label 로 접근 가능한 이름을 준다.
+ * 홈 -> 글 목록 -> GitHub 순으로, 왼쪽에서 오른쪽으로 갈수록
+ * 바깥으로 나가는 흐름이다.
+ *
+ * 전부 아이콘뿐이라 각각 aria-label 로 접근 가능한 이름을 준다.
  */
 export function SiteHeader() {
   return (
     <header className="flex items-center justify-end gap-2 px-6 py-5">
+      <Link
+        to="/"
+        aria-label="메인화면으로"
+        title="메인 화면"
+        className="flex size-9 items-center justify-center rounded-full text-gray-600 transition hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100"
+      >
+        <HomeIcon />
+      </Link>
+
       <Link
         to="/posts"
         aria-label="글 목록"
@@ -41,6 +53,20 @@ export function SiteHeader() {
         />
       </a>
     </header>
+  );
+}
+
+/** 홈으로 가는 집 아이콘. 그리드 아이콘과 같은 면(fill) 스타일로 맞췄다. */
+function HomeIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className="size-5"
+      aria-hidden="true"
+    >
+      <path d="M11.36 3.27a1 1 0 0 1 1.28 0l8 6.67a1 1 0 0 1 .36.77V20a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-4h-4v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9.29a1 1 0 0 1 .36-.77z" />
+    </svg>
   );
 }
 
