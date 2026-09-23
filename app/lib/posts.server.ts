@@ -2,6 +2,7 @@ import matter from "gray-matter";
 import { marked } from "marked";
 
 import type { Post, PostMeta } from "~/types/post";
+import { TAG_SHORTCUTS, type TagShortcut } from "~/config/tag-shortcuts";
 
 /**
  * content/posts/*.md 를 번들에 문자열로 포함시킨다.
@@ -88,4 +89,20 @@ export function getAllTags(): { tag: string; count: number }[] {
 export function getPostsByTag(tag: string): PostMeta[] | null {
   const posts = getAllPosts().filter((post) => post.tags.includes(tag));
   return posts.length > 0 ? posts : null;
+}
+
+/**
+ * 홈 바로가기에 실제로 띄울 항목.
+ *
+ * 설정 순서를 그대로 유지하되, 글이 하나도 없는 태그는 빼낸다.
+ * 오타이거나 아직 글을 안 쓴 태그인데, 그대로 두면 타일이 404 로
+ * 가는 링크가 된다.
+ */
+export function getTagShortcuts(): (TagShortcut & { count: number })[] {
+  const counts = new Map(getAllTags().map(({ tag, count }) => [tag, count]));
+
+  return TAG_SHORTCUTS.flatMap((shortcut) => {
+    const count = counts.get(shortcut.tag);
+    return count ? [{ ...shortcut, count }] : [];
+  });
 }
