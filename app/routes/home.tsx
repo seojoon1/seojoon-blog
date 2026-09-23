@@ -1,7 +1,7 @@
 import { Form, Link } from "react-router";
 
 import type { Route } from "./+types/home";
-import { getAllPosts, getAllTags } from "~/lib/posts.server";
+import { getAllPosts, getTagShortcuts } from "~/lib/posts.server";
 import { RecentPostsSlider } from "~/components/recent-posts-slider";
 
 const RECENT_POST_COUNT = 5;
@@ -15,13 +15,13 @@ export function meta({}: Route.MetaArgs) {
 
 export function loader() {
   return {
-    tags: getAllTags(),
+    shortcuts: getTagShortcuts(),
     recentPosts: getAllPosts().slice(0, RECENT_POST_COUNT),
   };
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  const { tags, recentPosts } = loaderData;
+  const { shortcuts, recentPosts } = loaderData;
 
   return (
     // 헤더/푸터를 제외한 남는 높이를 채우고 그 안에서 중앙 정렬한다.
@@ -52,17 +52,24 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         </div>
       </Form>
 
-      {tags.length > 0 && (
+      {shortcuts.length > 0 && (
         <ul className="mt-14 flex flex-wrap justify-center gap-x-2 gap-y-6">
-          {tags.map(({ tag, count }) => (
+          {shortcuts.map(({ tag, icon, count }) => (
             <li key={tag}>
               <Link
                 to={`/tags/${encodeURIComponent(tag)}`}
                 className="group flex w-24 flex-col items-center gap-2 rounded-xl px-1 py-2 hover:bg-gray-100 dark:hover:bg-gray-900"
               >
-                <span className="flex size-12 items-center justify-center rounded-full bg-gray-100 text-base text-gray-600 group-hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:group-hover:bg-gray-700">
-                  {/* 태그의 첫 글자를 아이콘 대신 쓴다. */}
-                  {[...tag][0]}
+                <span className="flex size-12 items-center justify-center rounded-full bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-800 dark:group-hover:bg-gray-700">
+                  <img
+                    src={icon}
+                    // 이름은 아래 라벨이 이미 갖고 있어 alt 는 비운다.
+                    alt=""
+                    // 파일이 없어도 원의 크기가 흔들리지 않게 한다.
+                    width={24}
+                    height={24}
+                    className="size-6"
+                  />
                 </span>
                 <span className="w-full truncate text-center text-xs text-gray-700 dark:text-gray-400">
                   {tag}
