@@ -8,7 +8,7 @@ const RECENT_POST_COUNT = 5;
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "seojoon-blog" },
+    { title: "seojoon.dev" },
     { name: "description", content: "개발하면서 남기는 기록." },
   ];
 }
@@ -27,7 +27,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
     // 헤더/푸터를 제외한 남는 높이를 채우고 그 안에서 중앙 정렬한다.
     <main className="flex flex-1 flex-col items-center justify-center px-6 pb-24">
       <h1 className="text-5xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-        seojoon-blog
+        seojoon.dev
       </h1>
 
       {/*
